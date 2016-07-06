@@ -1,10 +1,10 @@
 # postgresql-data-only
-postgresqldataonly:
+dataonly:
   build: ./postgresql-data-only
   command: tailf /dev/null
 
 # # Base image for orgpostgresql
-postgresqlbase:
+base:
    build: ./postgresql-base
    environment:
     POSTGRES_SUPER_USER: postgres
@@ -12,19 +12,4 @@ postgresqlbase:
    ports:
     - "5432:5432"
    volumes_from:
-    - postgresqldataonly
-
-postgresqlrun:
-  build: ./postgresql-run
-  environment:
-   POSTGRES_SUPER_USER: postgres
-   POSTGRES_SUPER_PASSWORD: postgres
-   ORG_DB_NAME: app1
-   ORG_DB_USER: app1
-   ORG_DB_PASS: app1
-   ORG_NAME: app1
-  ports:
-   - "5432:5432"
-  volumes_from:
-   - postgresqldataonly
-  restart: always
+    - dataonly
